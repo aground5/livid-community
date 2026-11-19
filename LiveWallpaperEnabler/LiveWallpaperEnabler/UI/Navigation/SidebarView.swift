@@ -28,10 +28,6 @@ struct SidebarView: View {
                 NavigationLink(value: AppTab.library) {
                     Label("My Collection", systemImage: "photo.stack")
                 }
-                
-                NavigationLink(value: AppTab.catalog) {
-                    Label("Aerial Catalog", systemImage: "globe.americas.fill")
-                }
             }
         }
         .listStyle(.sidebar)

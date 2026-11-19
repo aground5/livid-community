@@ -3,18 +3,6 @@ import Foundation
 @main
 class LiveWallpaperHelper {
     static func main() {
-        // Helper to restart Wallpaper Subsystem (Agent & Extension)
-        func restartWallpaperSubsystem() {
-            let processes = ["WallpaperAgent", "WallpaperAerialsExtension"]
-            
-            for procName in processes {
-                let task = Process()
-                task.launchPath = "/usr/bin/killall"
-                task.arguments = [procName]
-                try? task.run()
-            }
-        }
-        
         let args = ProcessInfo.processInfo.arguments
         HelperLogger.log("Process Launched. Args: \(args)")
         
@@ -29,10 +17,6 @@ class LiveWallpaperHelper {
             RunLoop.main.run()
         } else {
             // 2. Service Mode
-            // 1. Restart Wallpaper Subsystem
-            HelperLogger.log("🔄 [Startup] Restarting Wallpaper Subsystem (Agent & Extension)...")
-            restartWallpaperSubsystem()
-            
             HelperLogger.log("Starting NSXPCListener for bundled XPC service...")
             NSLog("🚀 Starting NSXPCListener for bundled XPC service")
             let delegate = XPCListenerDelegate()

@@ -10,10 +10,10 @@ struct LiveWallpaperItem: Identifiable, Codable, Equatable {
     let creationDate: Date
     let duration: Double
     
-    // Linkage to AerialService / System Catalog
+    // Legacy (system Aerials catalog link). Kept only so existing libraries still decode.
     var catalogAssetID: String? 
     
-    // Transient / System file support (for CatalogView)
+    // Optional absolute-path overrides for files outside the library folders
     var absolutePath: String? = nil
     var absoluteThumbnailPath: String? = nil
     
@@ -104,12 +104,6 @@ class WallpaperStore {
     func updateName(id: UUID, newName: String) {
         if let index = wallpapers.firstIndex(where: { $0.id == id }) {
             wallpapers[index].displayName = newName
-        }
-    }
-    
-    func updateCatalogLink(id: UUID, catalogID: String?) {
-        if let index = wallpapers.firstIndex(where: { $0.id == id }) {
-            wallpapers[index].catalogAssetID = catalogID
         }
     }
     

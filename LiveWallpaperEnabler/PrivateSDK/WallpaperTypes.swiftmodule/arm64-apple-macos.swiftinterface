@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-module-flags: -target arm64-apple-macos27.0 -enable-library-evolution -swift-version 5 -module-name WallpaperTypes
+// swift-module-flags: -target arm64-apple-macos26.0 -enable-library-evolution -swift-version 5 -module-name WallpaperTypes
 //
 // Hand-written subset of Apple's private WallpaperTypes.framework.
 // Derived only from the framework's exported symbol names (dyld_info -exports + swift demangle).
@@ -39,7 +39,23 @@ public struct WallpaperSettingsGroup {
   public struct ID {
     public init(_ value: Swift.String)
   }
+  public struct SortID {
+    public init(_ value: Swift.String)
+    public static var aerials: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+    public static var dynamic: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+    public static var systemPictures: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+    public static var colors: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+    public static var yourPhotos: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+    public static var albums: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+    public static var other: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+    public static var systemOther: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+  }
   public init(id: WallpaperTypes.WallpaperSettingsGroup.ID, localizedName: Swift.String, systemImageName: Swift.String?, items: [WallpaperTypes.WallpaperSettingsItem])
+  public var sortID: WallpaperTypes.WallpaperSettingsGroup.SortID { get }
+  public func sortID(_ sortID: WallpaperTypes.WallpaperSettingsGroup.SortID) -> WallpaperTypes.WallpaperSettingsGroup
+}
+extension WallpaperTypes.WallpaperSettingsGroup.SortID : Swift.CustomStringConvertible {
+  public var description: Swift.String { get }
 }
 
 public struct WallpaperSettingsViewModel {

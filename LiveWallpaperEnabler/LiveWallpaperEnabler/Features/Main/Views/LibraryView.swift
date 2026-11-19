@@ -10,8 +10,7 @@ struct LibraryView: View {
     // Connect to WallpaperStore
     @State private var store = WallpaperStore.shared
     
-    // Category Selection State
-    @State private var itemToRegister: LiveWallpaperItem?
+    @State private var wallpaperService = LividWallpaperService.shared
     
     // Rename State
     @State private var itemToRename: LiveWallpaperItem?
@@ -27,7 +26,8 @@ struct LibraryView: View {
             rowContent: { item in
                 LibraryRow(
                     item: item, 
-                    onRegister: { itemToRegister = item },
+                    isActive: wallpaperService.activeItemID == item.id,
+                    onSetWallpaper: { wallpaperService.setActive(item) },
                     onRename: {
                         itemToRename = item
                         renameText = item.displayName
@@ -38,7 +38,8 @@ struct LibraryView: View {
             gridContent: { item in
                 LibraryGridItem(
                     item: item, 
-                    onRegister: { itemToRegister = item },
+                    isActive: wallpaperService.activeItemID == item.id,
+                    onSetWallpaper: { wallpaperService.setActive(item) },
                     onRename: {
                         itemToRename = item
                         renameText = item.displayName
@@ -54,9 +55,6 @@ struct LibraryView: View {
                 }
             }
         )
-        .sheet(item: $itemToRegister) { item in
-            CategorySelectionSheet(item: item)
-        }
         .alert("Rename Wallpaper", isPresented: $isShowingRenameAlert) {
             TextField("Name", text: $renameText)
             Button("Cancel", role: .cancel) { }
@@ -68,8 +66,8 @@ struct LibraryView: View {
         } message: {
             Text("Enter a new name for this wallpaper.")
         }
-        .onAppear {
-            AerialService.shared.loadManifest()
+        .safeAreaInset(edge: .bottom) {
+            ActiveWallpaperBar(service: wallpaperService)
         }
         .overlay {
             if store.wallpapers.isEmpty {
@@ -85,7 +83,8 @@ struct LibraryView: View {
 
 private struct LibraryRow: View {
     let item: LiveWallpaperItem
-    let onRegister: () -> Void
+    let isActive: Bool
+    let onSetWallpaper: () -> Void
     let onRename: () -> Void
     
     var body: some View {
@@ -106,6 +105,10 @@ private struct LibraryRow: View {
             
             Spacer()
             
+            if isActive {
+                ActiveBadge()
+            }
+            
             // Duration Badge
             Text(String(format: "%.1fs", item.duration))
                 .font(.caption)
@@ -120,10 +123,11 @@ private struct LibraryRow: View {
         .contentShape(Rectangle())
         .contextMenu {
             Button {
-                onRegister()
+                onSetWallpaper()
             } label: {
-                Label("Register to Catalog", systemImage: "plus.square.on.square")
+                Label("Set as Wallpaper", systemImage: "photo.on.rectangle")
             }
+            .disabled(isActive)
             
             Button {
                 onRename()
@@ -149,7 +153,8 @@ private struct LibraryRow: View {
 
 private struct LibraryGridItem: View {
     let item: LiveWallpaperItem
-    let onRegister: () -> Void
+    let isActive: Bool
+    let onSetWallpaper: () -> Void
     let onRename: () -> Void
     
     var body: some View {
@@ -165,6 +170,9 @@ private struct LibraryGridItem: View {
                         .stroke(Color.white.opacity(0.1), lineWidth: 1)
                 )
                 .overlay(durationOverlay)
+                .overlay(alignment: .topLeading) {
+                    if isActive { ActiveBadge().padding(6) }
+                }
                 .shadow(color: .black.opacity(0.2), radius: 4, y: 2)
             
             VStack(alignment: .leading, spacing: 2) {
@@ -179,10 +187,11 @@ private struct LibraryGridItem: View {
         .contentShape(Rectangle())
         .contextMenu {
             Button {
-                onRegister()
+                onSetWallpaper()
             } label: {
-                Label("Register to Catalog", systemImage: "plus.square.on.square")
+                Label("Set as Wallpaper", systemImage: "photo.on.rectangle")
             }
+            .disabled(isActive)
             
             Button {
                 onRename()
@@ -221,6 +230,51 @@ private struct LibraryGridItem: View {
                     .padding(6)
             }
         }
+    }
+}
+
+private struct ActiveBadge: View {
+    var body: some View {
+        Label("Wallpaper", systemImage: "checkmark.circle.fill")
+            .font(.caption2.weight(.semibold))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(Color.accentColor, in: Capsule())
+    }
+}
+
+/// Shows which library video the "Livid" wallpaper plays, and how to turn the wallpaper on.
+private struct ActiveWallpaperBar: View {
+    let service: LividWallpaperService
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "photo.on.rectangle")
+                .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 2) {
+                if let error = service.lastError {
+                    Text("Couldn't set wallpaper").font(.callout.weight(.semibold))
+                    Text(error).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                } else if let selection = service.activeSelection {
+                    Text("Wallpaper: \(selection.title)").font(.callout.weight(.semibold)).lineLimit(1)
+                    Text("Choose “Livid” in System Settings → Wallpaper to show it.").font(.caption).foregroundStyle(.secondary)
+                } else {
+                    Text("No wallpaper set").font(.callout.weight(.semibold))
+                    Text("Right-click a video and choose Set as Wallpaper.").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+            Spacer()
+            if service.isApplying {
+                ProgressView().controlSize(.small)
+            }
+            Button("Wallpaper Settings…") {
+                service.openWallpaperSettings()
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(.bar)
     }
 }
 

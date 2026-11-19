@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-module-flags: -target arm64-apple-macos27.0 -enable-library-evolution -swift-version 5 -module-name WallpaperExtensionKit
+// swift-module-flags: -target arm64-apple-macos26.0 -enable-library-evolution -swift-version 5 -module-name WallpaperExtensionKit
 //
 // Hand-written subset of Apple's private WallpaperExtensionKit.framework.
 // Derived only from the framework's exported symbol names (dyld_info -exports + swift demangle)
@@ -33,6 +33,8 @@ public struct VideoWallpaperConfiguration {
 
 public class VideoWallpaper {
   public init(request: WallpaperExtensionKit.WallpaperCreationRequest, host: any WallpaperExtensionKit.WallpaperHostProxy, configuration: WallpaperExtensionKit.VideoWallpaperConfiguration, shouldLoop: Swift.Bool) async throws
+  // No dispatch thunk is exported for setVideos, so it is final.
+  final public func setVideos(_ videos: [WallpaperExtensionKit.Video]) async
   @objc deinit
 }
 extension WallpaperExtensionKit.VideoWallpaper : WallpaperExtensionKit.Wallpaper {}
@@ -58,4 +60,18 @@ extension WallpaperExtensionKit.WallpaperExtensionSettingsProvider {
   }
   public func didHandleExternalSettingsViewModelUpdate()
   public func invokeContextMenuAction(menuItemID: WallpaperTypes.ContextMenuItem.ID, groupItemID: WallpaperTypes.WallpaperSettingsItem.ID) async throws
+}
+
+public protocol WallpaperExtensionDownloadHandler {
+  func isChoiceDownloaded(with choiceID: WallpaperTypes.WallpaperChoice.ID) async throws -> Swift.Bool
+  func download(choiceID: WallpaperTypes.WallpaperChoice.ID, progress: Foundation.Progress) async throws
+  func cancelDownload(for choiceID: WallpaperTypes.WallpaperChoice.ID) async throws
+  func pauseDownload(for choiceID: WallpaperTypes.WallpaperChoice.ID) async throws
+  func resumeDownload(for choiceID: WallpaperTypes.WallpaperChoice.ID) async throws
+  func removeDownload(for choiceID: WallpaperTypes.WallpaperChoice.ID) async throws
+}
+extension WallpaperExtensionKit.WallpaperExtensionDownloadHandler {
+  public func pauseDownload(for choiceID: WallpaperTypes.WallpaperChoice.ID) async throws
+  public func resumeDownload(for choiceID: WallpaperTypes.WallpaperChoice.ID) async throws
+  public func removeDownload(for choiceID: WallpaperTypes.WallpaperChoice.ID) async throws
 }
