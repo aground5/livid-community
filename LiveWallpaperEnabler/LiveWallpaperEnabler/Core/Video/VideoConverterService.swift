@@ -32,9 +32,10 @@ nonisolated final class VideoConverterService: Sendable {
     func convertToNativelyPlayable(inputURL: URL, outputURL: URL, timeRange: CMTimeRange? = nil, forceFFmpeg: Bool = false, progressHandler: (@Sendable (Double) -> Void)? = nil) async throws {
         let ext = inputURL.pathExtension.lowercased()
         
-        if ext == "mp4" {
-            // Fast Path: For MP4, we try to remux (stream copy) to MOV to preserve quality and speed.
-            // As the user requested: "just reconstruct metadata with ffmpeg"
+        if ext == "mp4" && !forceFFmpeg {
+            // Fast Path: For MP4 with a natively decodable codec (H.264/HEVC), remux (stream copy)
+            // to preserve quality and speed. MP4s carrying VP9/AV1 (YouTube serves VP9-in-MP4 at
+            // high resolutions) must be transcoded instead: AVFoundation cannot open them.
             try await remuxWithFFmpeg(inputURL: inputURL, outputURL: outputURL, timeRange: timeRange, progressHandler: progressHandler)
             return
         }
