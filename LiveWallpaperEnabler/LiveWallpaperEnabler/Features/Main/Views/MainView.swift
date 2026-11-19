@@ -23,8 +23,6 @@ struct MainView: View {
                         renderContentView
                     case .library:
                         libraryContentView
-                    case .catalog:
-                        catalogContentView
                     }
                 }
             }
@@ -55,11 +53,7 @@ struct MainView: View {
     private var libraryContentView: some View {
         LibraryView(viewModel: viewModel)
     }
-    
-    private var catalogContentView: some View {
-        CatalogView(viewModel: viewModel)
     }
-}
 
 #Preview {
     MainView()

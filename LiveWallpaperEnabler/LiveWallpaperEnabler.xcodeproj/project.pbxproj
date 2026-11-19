@@ -11,6 +11,7 @@
 		0A67C36A2F5200280087C7FB /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0A67C3692F5200280087C7FB /* Sparkle */; };
 		0AAFFB512F292C5E007DD74E /* WebMSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0AAFFB502F292C5E007DD74E /* WebMSupport */; };
 		0AAFFB762F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 0AAFFB6B2F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E1A0C0DE2F7A000000000002 /* LividWallpaperExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = E1A0C0DE2F7A000000000001 /* LividWallpaperExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -20,6 +21,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0AAFFB6A2F2B57A8007DD74E;
 			remoteInfo = LiveWallpaperHelper;
+		};
+		E1A0C0DE2F7A000000000003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A291C532F29066600A8B5B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1A0C0DE2F7A000000000009;
+			remoteInfo = LividWallpaperExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -35,11 +43,23 @@
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1A0C0DE2F7A000000000005 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				E1A0C0DE2F7A000000000002 /* LividWallpaperExtension.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0A291C5B2F29066600A8B5B9 /* Livid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Livid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AAFFB6B2F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = com.mitocondria.LiveWallpaperHelper.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1A0C0DE2F7A000000000001 /* LividWallpaperExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = LividWallpaperExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -63,31 +83,22 @@
 			membershipExceptions = (
 				Core/Network/LiveWallpaperHelperProtocol.swift,
 				Core/Network/YTDLPModels.swift,
-				Core/QtParser/Analyzers/QtNALUnitParser.swift,
-				Core/QtParser/Atoms/QtAtomContainer.swift,
-				Core/QtParser/Atoms/QtAtomCsgm.swift,
-				Core/QtParser/Atoms/QtAtomCtts.swift,
-				Core/QtParser/Atoms/QtAtomDref.swift,
-				Core/QtParser/Atoms/QtAtomElst.swift,
-				Core/QtParser/Atoms/QtAtomFtyp.swift,
-				Core/QtParser/Atoms/QtAtomHdlr.swift,
-				Core/QtParser/Atoms/QtAtomMdhd.swift,
-				Core/QtParser/Atoms/QtAtomMediaInfo.swift,
-				Core/QtParser/Atoms/QtAtomMvhd.swift,
-				Core/QtParser/Atoms/QtAtomSampleTable.swift,
-				Core/QtParser/Atoms/QtAtomSampleTableExtra.swift,
-				Core/QtParser/Atoms/QtAtomTapt.swift,
-				Core/QtParser/Atoms/QtAtomTkhd.swift,
-				Core/QtParser/Core/QtAtom.swift,
-				Core/QtParser/Core/QtParser.swift,
-				Core/QtParser/Core/QtReader.swift,
-				Core/QtParser/Core/QtWriter.swift,
-				Core/QtParser/Generators/QtAtomGenerator.swift,
-				Core/QtParser/QtAtomPatcher.swift,
-				Core/QtParser/QtDefaultRegistry.swift,
-				Core/QtParser/WallpaperInjector.swift,
 			);
 			target = 0AAFFB6A2F2B57A8007DD74E /* LiveWallpaperHelper */;
+		};
+		E1A0C0DE2F7A000000000007 /* Exceptions for "LividWallpaperExtension" folder in "LividWallpaperExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E1A0C0DE2F7A000000000009 /* LividWallpaperExtension */;
+		};
+		E1A0C0DE2F7A000000000008 /* Exceptions for "LiveWallpaperEnabler" folder in "LividWallpaperExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Shared/ActiveWallpaper.swift,
+			);
+			target = E1A0C0DE2F7A000000000009 /* LividWallpaperExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -97,6 +108,7 @@
 			exceptions = (
 				0A67C36C2F5200BF0087C7FB /* Exceptions for "LiveWallpaperEnabler" folder in "LiveWallpaperEnabler" target */,
 				0AAFFB7E2F2BB081007DD74E /* Exceptions for "LiveWallpaperEnabler" folder in "LiveWallpaperHelper" target */,
+				E1A0C0DE2F7A000000000008 /* Exceptions for "LiveWallpaperEnabler" folder in "LividWallpaperExtension" target */,
 			);
 			path = LiveWallpaperEnabler;
 			sourceTree = "<group>";
@@ -107,6 +119,14 @@
 				0AAFFB772F2B57A8007DD74E /* Exceptions for "LiveWallpaperHelper" folder in "LiveWallpaperHelper" target */,
 			);
 			path = LiveWallpaperHelper;
+			sourceTree = "<group>";
+		};
+		E1A0C0DE2F7A000000000006 /* LividWallpaperExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E1A0C0DE2F7A000000000007 /* Exceptions for "LividWallpaperExtension" folder in "LividWallpaperExtension" target */,
+			);
+			path = LividWallpaperExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -129,6 +149,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1A0C0DE2F7A00000000000B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -137,6 +164,7 @@
 			children = (
 				0A291C5D2F29066600A8B5B9 /* LiveWallpaperEnabler */,
 				0AAFFB6C2F2B57A8007DD74E /* LiveWallpaperHelper */,
+				E1A0C0DE2F7A000000000006 /* LividWallpaperExtension */,
 				0A8CFC602F34BAF8006D784F /* Frameworks */,
 				0A291C5C2F29066600A8B5B9 /* Products */,
 			);
@@ -147,6 +175,7 @@
 			children = (
 				0A291C5B2F29066600A8B5B9 /* Livid.app */,
 				0AAFFB6B2F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc */,
+				E1A0C0DE2F7A000000000001 /* LividWallpaperExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,11 +198,13 @@
 				0A291C582F29066600A8B5B9 /* Frameworks */,
 				0A291C592F29066600A8B5B9 /* Resources */,
 				0AAFFB7B2F2B57A8007DD74E /* Embed XPC Services */,
+				E1A0C0DE2F7A000000000005 /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				0AAFFB752F2B57A8007DD74E /* PBXTargetDependency */,
+				E1A0C0DE2F7A000000000004 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				0A291C5D2F29066600A8B5B9 /* LiveWallpaperEnabler */,
@@ -211,6 +242,28 @@
 			productReference = 0AAFFB6B2F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
+		E1A0C0DE2F7A000000000009 /* LividWallpaperExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1A0C0DE2F7A00000000000D /* Build configuration list for PBXNativeTarget "LividWallpaperExtension" */;
+			buildPhases = (
+				E1A0C0DE2F7A00000000000A /* Sources */,
+				E1A0C0DE2F7A00000000000B /* Frameworks */,
+				E1A0C0DE2F7A00000000000C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E1A0C0DE2F7A000000000006 /* LividWallpaperExtension */,
+			);
+			name = LividWallpaperExtension;
+			packageProductDependencies = (
+			);
+			productName = LividWallpaperExtension;
+			productReference = E1A0C0DE2F7A000000000001 /* LividWallpaperExtension.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -226,6 +279,9 @@
 					};
 					0AAFFB6A2F2B57A8007DD74E = {
 						CreatedOnToolsVersion = 26.1.1;
+					};
+					E1A0C0DE2F7A000000000009 = {
+						CreatedOnToolsVersion = 27.2;
 					};
 				};
 			};
@@ -249,6 +305,7 @@
 			targets = (
 				0A291C5A2F29066600A8B5B9 /* LiveWallpaperEnabler */,
 				0AAFFB6A2F2B57A8007DD74E /* LiveWallpaperHelper */,
+				E1A0C0DE2F7A000000000009 /* LividWallpaperExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -262,6 +319,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0AAFFB692F2B57A8007DD74E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1A0C0DE2F7A00000000000C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -308,6 +372,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1A0C0DE2F7A00000000000A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -315,6 +386,11 @@
 			isa = PBXTargetDependency;
 			target = 0AAFFB6A2F2B57A8007DD74E /* LiveWallpaperHelper */;
 			targetProxy = 0AAFFB742F2B57A8007DD74E /* PBXContainerItemProxy */;
+		};
+		E1A0C0DE2F7A000000000004 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1A0C0DE2F7A000000000009 /* LividWallpaperExtension */;
+			targetProxy = E1A0C0DE2F7A000000000003 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -590,6 +666,84 @@
 			};
 			name = Release;
 		};
+		E1A0C0DE2F7A00000000000E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = LividWallpaperExtension/LividWallpaperExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = KUJY2K5BCW;
+				ENABLE_APP_SANDBOX = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LividWallpaperExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Livid;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 2026.03.21;
+				OTHER_LDFLAGS = (
+					"$(PROJECT_DIR)/PrivateSDK/WallpaperExtensionKit.tbd",
+					"$(PROJECT_DIR)/PrivateSDK/WallpaperTypes.tbd",
+					"-e",
+					_NSExtensionMain,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitocondria.LiveWallpaperEnabler.WallpaperExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "$(PROJECT_DIR)/PrivateSDK";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E1A0C0DE2F7A00000000000F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = LividWallpaperExtension/LividWallpaperExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = KUJY2K5BCW;
+				ENABLE_APP_SANDBOX = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LividWallpaperExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Livid;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 2026.03.21;
+				OTHER_LDFLAGS = (
+					"$(PROJECT_DIR)/PrivateSDK/WallpaperExtensionKit.tbd",
+					"$(PROJECT_DIR)/PrivateSDK/WallpaperTypes.tbd",
+					"-e",
+					_NSExtensionMain,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitocondria.LiveWallpaperEnabler.WallpaperExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INCLUDE_PATHS = "$(PROJECT_DIR)/PrivateSDK";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -616,6 +770,15 @@
 			buildConfigurations = (
 				0AAFFB792F2B57A8007DD74E /* Debug */,
 				0AAFFB7A2F2B57A8007DD74E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1A0C0DE2F7A00000000000D /* Build configuration list for PBXNativeTarget "LividWallpaperExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1A0C0DE2F7A00000000000E /* Debug */,
+				E1A0C0DE2F7A00000000000F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

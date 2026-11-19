@@ -11,7 +11,6 @@ enum AppTab: String, CaseIterable {
     case edit = "Trim"
     case render = "Render"
     case library = "Library"
-    case catalog = "Catalog"
     
     var icon: String {
         switch self {
@@ -19,7 +18,6 @@ enum AppTab: String, CaseIterable {
         case .edit: return "scissors"
         case .render: return "cpu"
         case .library: return "square.grid.2x2.fill"
-        case .catalog: return "square.grid.3x3.fill"
         }
     }
 }
@@ -54,7 +52,6 @@ class MainViewModel {
     var isEnabled = false
     var windowOpacity: Double = 1.0
     // var exportState = ExportState() // Removed in favor of Queue
-    var selectedAerialAsset: AerialAsset?
     
     // MARK: - Queue State Proxy
     var renderJobs: [RenderJob] { RenderQueueService.shared.jobs }
