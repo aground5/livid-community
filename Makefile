@@ -26,6 +26,7 @@ PYTHON_VERSION := 3.13.9
 PYTHON_DIST    := cpython-3.13.9-macos-aarch64-none
 PYTHON_ROOT    := $(PROJECT_ROOT)/Packages/$(PYTHON_DIST)
 PYTHON_BIN     := $(PYTHON_ROOT)/bin/python3
+YTDLP_VERSION  := 2026.10.26
 
 # Environment Variables
 export PATH := $(BIN_DIR):$(PATH)
@@ -506,10 +507,14 @@ setup-python:
 		cp -Rf $$PYTHON_REAL_DIR/. $(PYTHON_ROOT)/; \
 		echo "🔓 Unlocking environment (removing EXTERNALLY-MANAGED)..."; \
 		find $(PYTHON_ROOT) -name "EXTERNALLY-MANAGED" -delete; \
-		echo "📥 Installing yt-dlp into standalone environment..."; \
-		$(PYTHON_BIN) -m pip install yt-dlp; \
 	else \
 		echo "✅ Python runtime already exists at $(PYTHON_ROOT)"; \
+	fi
+	@if [ "$$($(PYTHON_BIN) -m pip show yt-dlp 2>/dev/null | awk '/^Version:/{print $$2}')" != "$(YTDLP_VERSION)" ]; then \
+		echo "📥 Installing yt-dlp $(YTDLP_VERSION) into standalone environment..."; \
+		$(PYTHON_BIN) -m pip install --upgrade "yt-dlp==$(YTDLP_VERSION)"; \
+	else \
+		echo "✅ yt-dlp $(YTDLP_VERSION) already installed"; \
 	fi
 
 build-xcode: setup-python copy-framework resolve-deps
