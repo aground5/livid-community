@@ -1,0 +1,70 @@
+// swift-interface-format-version: 1.0
+// swift-module-flags: -target arm64-apple-macos27.0 -enable-library-evolution -swift-version 5 -module-name WallpaperTypes
+//
+// Hand-written subset of Apple's private WallpaperTypes.framework.
+// Derived only from the framework's exported symbol names (dyld_info -exports + swift demangle).
+// Declarations must mangle to exactly those exported names; the matching .tbd lists only real exports,
+// so any mismatch fails at link time.
+import Foundation
+import Swift
+
+public struct WallpaperChoiceProviderID {
+  public init(rawValue: Swift.String)
+}
+
+public struct WallpaperChoiceDescriptor {
+  public init(provider: WallpaperTypes.WallpaperChoiceProviderID, files: [Foundation.URL], configuration: Foundation.Data)
+}
+
+// Resilient enum: only the case we construct is declared; its tag is resolved through the exported case symbol.
+public enum WallpaperThumbnail {
+  case image(url: Foundation.URL)  // labeled payload (mangles as a 1-tuple); label text is not part of the ABI
+}
+
+public struct WallpaperChoice {
+  public struct ID {
+    public init(descriptor: WallpaperTypes.WallpaperChoiceDescriptor)
+  }
+  public init(id: WallpaperTypes.WallpaperChoice.ID, localizedDescription: Swift.String, thumbnail: WallpaperTypes.WallpaperThumbnail, isDownloaded: Swift.Bool)
+}
+
+public struct WallpaperSettingsItem {
+  public struct ID {
+    public init(_ value: Swift.String)
+  }
+  public init(id: WallpaperTypes.WallpaperSettingsItem.ID, localizedName: Swift.String, thumbnail: WallpaperTypes.WallpaperThumbnail, choice: WallpaperTypes.WallpaperChoice)
+}
+
+public struct WallpaperSettingsGroup {
+  public struct ID {
+    public init(_ value: Swift.String)
+  }
+  public init(id: WallpaperTypes.WallpaperSettingsGroup.ID, localizedName: Swift.String, systemImageName: Swift.String?, items: [WallpaperTypes.WallpaperSettingsItem])
+}
+
+public struct WallpaperSettingsViewModel {
+  // No exported case symbols => frozen, payload-free Int enum. Case names are placeholders;
+  // only the layout (1 byte, no payload) matters because we never switch over it.
+  @frozen public enum ContentType : Swift.Int {
+    case desktop
+    case screenSaver
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum RefreshPolicy {
+    case `default`
+    case discretionary
+  }
+  public init(groups: [WallpaperTypes.WallpaperSettingsGroup], refreshPolicy: WallpaperTypes.WallpaperSettingsViewModel.RefreshPolicy)
+}
+extension WallpaperTypes.WallpaperSettingsViewModel.ContentType : Swift.Equatable {}
+extension WallpaperTypes.WallpaperSettingsViewModel.ContentType : Swift.Hashable {}
+extension WallpaperTypes.WallpaperSettingsViewModel.ContentType : Swift.RawRepresentable {}
+
+public struct ContextMenuItem {
+  public struct ID {
+  }
+}

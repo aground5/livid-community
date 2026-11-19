@@ -1,0 +1,61 @@
+// swift-interface-format-version: 1.0
+// swift-module-flags: -target arm64-apple-macos27.0 -enable-library-evolution -swift-version 5 -module-name WallpaperExtensionKit
+//
+// Hand-written subset of Apple's private WallpaperExtensionKit.framework.
+// Derived only from the framework's exported symbol names (dyld_info -exports + swift demangle)
+// and runtime protocol-descriptor flags (Wallpaper / WallpaperHostProxy are not class-constrained).
+import ExtensionFoundation
+import Foundation
+import Swift
+import _Concurrency
+import WallpaperTypes
+
+public struct WallpaperCreationRequest {
+}
+
+public struct WallpaperUpdateRequest {
+}
+
+// Requirements omitted: we only pass these existentials through, never call or conform.
+public protocol WallpaperHostProxy {
+}
+
+public protocol Wallpaper {
+}
+
+public struct Video {
+  public init(url: Foundation.URL)
+}
+
+public struct VideoWallpaperConfiguration {
+  public init(videos: [WallpaperExtensionKit.Video])
+}
+
+public class VideoWallpaper {
+  public init(request: WallpaperExtensionKit.WallpaperCreationRequest, host: any WallpaperExtensionKit.WallpaperHostProxy, configuration: WallpaperExtensionKit.VideoWallpaperConfiguration, shouldLoop: Swift.Bool) async throws
+  @objc deinit
+}
+extension WallpaperExtensionKit.VideoWallpaper : WallpaperExtensionKit.Wallpaper {}
+
+public protocol WallpaperExtension : ExtensionFoundation.AppExtension {
+  func makeWallpaper(request: WallpaperExtensionKit.WallpaperCreationRequest, host: any WallpaperExtensionKit.WallpaperHostProxy) async throws -> any WallpaperExtensionKit.Wallpaper
+}
+extension WallpaperExtensionKit.WallpaperExtension {
+  public var configuration: some ExtensionFoundation.AppExtensionConfiguration {
+    get
+  }
+}
+
+public protocol WallpaperExtensionSettingsProvider {
+  func settingsViewModel(for contentType: WallpaperTypes.WallpaperSettingsViewModel.ContentType) async throws -> WallpaperTypes.WallpaperSettingsViewModel
+  var settingsViewModelUpdates: (any _Concurrency.AsyncSequence<Swift.Set<WallpaperTypes.WallpaperSettingsViewModel.ContentType>, Swift.Never>)? { get }
+  func didHandleExternalSettingsViewModelUpdate()
+  func invokeContextMenuAction(menuItemID: WallpaperTypes.ContextMenuItem.ID, groupItemID: WallpaperTypes.WallpaperSettingsItem.ID) async throws
+}
+extension WallpaperExtensionKit.WallpaperExtensionSettingsProvider {
+  public var settingsViewModelUpdates: (any _Concurrency.AsyncSequence<Swift.Set<WallpaperTypes.WallpaperSettingsViewModel.ContentType>, Swift.Never>)? {
+    get
+  }
+  public func didHandleExternalSettingsViewModelUpdate()
+  public func invokeContextMenuAction(menuItemID: WallpaperTypes.ContextMenuItem.ID, groupItemID: WallpaperTypes.WallpaperSettingsItem.ID) async throws
+}
