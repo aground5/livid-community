@@ -9,7 +9,7 @@
             <sparkle:shortVersionString>2026.03.21</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/aground5/livid-community/releases/download/v2026.03.21/livid-macos-arm64-2026.03.21.dmg" length="53163113" type="application/octet-stream" sparkle:edSignature="jQQt5H35FzKlNyHtSCKvmq90V+HQCl9ch7JxJwiWYTErSSRiRTRzv51vs5OrVxf8GLlP3th5eFLqMcykfUtQDA=="/>
+            <enclosure url="https://github.com/aground5/livid-community/releases/download/v2026.03.21/livid-macos-arm64-2026.03.21.dmg" length="49719068" type="application/octet-stream" sparkle:edSignature="BkPdGJycANCwH8WJUv1RoqHywGf17wC0ioIE7fBUXsTFio6nsGaibU+aApe1NynvgHjUs+1Ut/mb17yJCnyBDg=="/>
             <sparkle:deltas>
                 <enclosure url="https://github.com/aground5/livid-community/releases/download/v2026.03.21/Livid3-1.delta" sparkle:deltaFrom="1" length="24339886" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="977808" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,uk" sparkle:edSignature="sLhrkgphU/YG3++mn8fGcxwe0wgNzE0xlvOnLgMSZ/qXYff/5AuWklJkssTO6dBDmA6BwraVsAvC9pGCJaBKAQ=="/>
             </sparkle:deltas>
