@@ -2,7 +2,7 @@ import Foundation
 
 /// A file location as stored in the database: relative to `AppPaths.root` when the file is in the
 /// container (the normal case), absolute only for legacy records that still point outside it.
-struct StoredFileReference: Codable, Equatable, Sendable {
+nonisolated struct StoredFileReference: Codable, Equatable, Sendable {
     var relativePath: String?
     var absolutePath: String?
 
@@ -25,7 +25,7 @@ struct StoredFileReference: Codable, Equatable, Sendable {
 /// Keys deliberately match `YTDLPMetadata`'s JSON keys so the legacy (full metadata) records decode
 /// into this type directly. `formats` is intentionally not stored: it is only needed while
 /// choosing a stream and is re-fetched when missing.
-struct StoredYouTubeSource: Codable, Sendable {
+nonisolated struct StoredYouTubeSource: Codable, Sendable {
     let id: String
     let title: String
     let webpage_url: String

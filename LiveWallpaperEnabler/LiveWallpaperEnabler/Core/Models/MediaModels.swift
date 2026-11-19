@@ -6,7 +6,7 @@ import CoreMedia
 /// In memory this keeps the full yt-dlp metadata and stream list. On disk (see `Codable` below)
 /// it stores only a small, stable subset, and file locations relative to `AppPaths.root`, so
 /// yt-dlp model changes or a moved container never make the library undecodable.
-enum MediaSource: Sendable {
+nonisolated enum MediaSource: Sendable {
     case local(url: URL)
     case youtube(metadata: YTDLPMetadata, localURL: URL?, streams: [YouTubeStreamOption])
     
@@ -92,7 +92,7 @@ extension MediaSource: Codable {
     }
 }
 
-struct MediaIngredient: Identifiable, Codable, Equatable {
+nonisolated struct MediaIngredient: Identifiable, Codable, Equatable {
     let id: UUID
     var name: String
     var source: MediaSource
@@ -130,7 +130,7 @@ struct MediaIngredient: Identifiable, Codable, Equatable {
     }
 }
 
-struct MediaMetadata: Codable, Equatable {
+nonisolated struct MediaMetadata: Codable, Equatable {
     let codec: String
     let profile: String?
     let width: Int
@@ -183,7 +183,7 @@ struct MediaMetadata: Codable, Equatable {
     }
 }
 
-enum TranscodeStrategy: String, Codable, Sendable {
+nonisolated enum TranscodeStrategy: String, Codable, Sendable {
     case advancedColorAndChroma = "Advanced (HDR/P3 + High Chroma)"
     case hdrTonemap10Bit = "HDR/WideColor to SDR 10-bit"
     case chromaDownsample10Bit = "Professional SDR 4:2:2/4:4:4"
@@ -206,14 +206,14 @@ enum TranscodeStrategy: String, Codable, Sendable {
     }
 }
 
-struct ImportState {
+nonisolated struct ImportState {
     var isImporting: Bool = false
     var progress: Double = 0.0
     var status: String = ""
     var error: String? = nil
 }
 
-struct ExportState {
+nonisolated struct ExportState {
     var isActive: Bool = false
     var progress: Double = 0.0
     var status: String = "Idle"
@@ -227,7 +227,7 @@ struct ExportState {
 }
 
 // MARK: - FFmpeg Metrics Protocol
-struct FFmpegMediaMetrics: Sendable {
+nonisolated struct FFmpegMediaMetrics: Sendable {
     let progress: Double
     let currentFrame: Int
     let speed: Double     // e.g., 1.5 (means 1.5x real-time)
@@ -241,7 +241,7 @@ protocol FFmpegProgressDelegate: Sendable {
 }
 
 // MARK: - YouTube Download State
-struct DownloadState: Sendable {
+nonisolated struct DownloadState: Sendable {
     var progress: Double = 0.0
     var status: String = ""
     var phase: String = "idle"

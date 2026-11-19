@@ -22,7 +22,7 @@ enum VideoConversionError: LocalizedError {
     }
 }
 
-class VideoConverterService {
+nonisolated final class VideoConverterService: Sendable {
     static let shared = VideoConverterService()
     
     private init() {}
@@ -241,7 +241,7 @@ class VideoConverterService {
     private func prepareNativelyPlayableWithFFmpeg(inputURL: URL, outputURL: URL, timeRange: CMTimeRange? = nil, progressHandler: (@Sendable (Double) -> Void)? = nil) async throws {
         let inputPath = inputURL.path
         let startTime = timeRange?.start.seconds ?? 0
-        var endTime = timeRange.map { $0.start.seconds + $0.duration.seconds } ?? 0
+        let endTime = timeRange.map { $0.start.seconds + $0.duration.seconds } ?? 0
         
         // Execute on a dedicated background thread to prevent blocking Swift Concurrency pool
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in

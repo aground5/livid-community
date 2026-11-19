@@ -26,7 +26,7 @@ actor LiveWallpaperExporter {
     
     /// Executes the export process using the provided configuration.
     /// Handles trimming calculation and delegates to VideoConverterService.
-    func export(config: LiveWallpaperExportConfiguration, progressHandler: ((Double) -> Void)? = nil) async throws {
+    func export(config: LiveWallpaperExportConfiguration, progressHandler: (@Sendable (Double) -> Void)? = nil) async throws {
         
         // 1. Calculate Trimming Range
         let range = calculateTrimRange(config: config)
