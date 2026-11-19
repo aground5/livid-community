@@ -2,7 +2,7 @@
 set -e
 
 # Configuration
-PROJECT_ROOT="/Users/k2zoo/Documents/coding/livid"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC_DIR="$PROJECT_ROOT/src"
 BUILD_DIR="$PROJECT_ROOT/build"
 
