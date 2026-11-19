@@ -54,10 +54,9 @@ final class PythonTask {
         var env = ProcessInfo.processInfo.environment
         env["LC_ALL"] = "en_US.UTF-8"
         
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let privateBinPath = appSupport.appendingPathComponent("LiveWallpaperEnabler/bin").path
+        // Tools come from the app bundle (BinaryManager); nothing is looked up in the user's Library.
         let currentPath = env["PATH"] ?? ""
-        let extraPaths = "\(privateBinPath):/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        let extraPaths = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
         env["PATH"] = "\(extraPaths):\(currentPath)"
         process.environment = env
         

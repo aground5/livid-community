@@ -23,9 +23,7 @@ enum HelperLogger {
 
     private static func append(_ message: String) {
         queue.async {
-            let home = FileManager.default.homeDirectoryForCurrentUser
-            let logDir = home.appendingPathComponent("Library/Logs", isDirectory: true)
-            try? FileManager.default.createDirectory(at: logDir, withIntermediateDirectories: true)
+            let logDir = AppPaths.logs
 
             let logPath = logDir.appendingPathComponent("LiveWallpaperHelper.log")
             let timestamp = formatter.string(from: Date())

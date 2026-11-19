@@ -96,20 +96,27 @@ def sanitize_result(ydl, info):
     return ydl.sanitize_info(info)
 
 
-def fetch_metadata(url):
-    options = {
+def apply_cache_dir(options, cache_dir):
+    # Keep yt-dlp's cache inside the app container instead of ~/.cache/yt-dlp.
+    if cache_dir:
+        options["cachedir"] = cache_dir
+    return options
+
+
+def fetch_metadata(url, cache_dir=None):
+    options = apply_cache_dir({
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
         "skip_download": True,
-    }
+    }, cache_dir)
 
     with YoutubeDL(options) as ydl:
         info = ydl.extract_info(url, download=False)
         emit({"type": "metadata", "payload": sanitize_result(ydl, info)})
 
 
-def download_video(url, output, format_selector):
+def download_video(url, output, format_selector, cache_dir=None):
     def on_progress(status):
         emit(progress_event(status))
 
@@ -125,6 +132,7 @@ def download_video(url, output, format_selector):
         "postprocessor_hooks": [on_postprocessor],
         "noprogress": True,  # Suppress internal progress bar to prevent stdout clutter
     }
+    apply_cache_dir(options, cache_dir)
 
     if format_selector:
         options["format"] = format_selector
@@ -153,18 +161,20 @@ def main():
 
     metadata_parser = subparsers.add_parser("metadata")
     metadata_parser.add_argument("--url", required=True)
+    metadata_parser.add_argument("--cache-dir")
 
     download_parser = subparsers.add_parser("download")
     download_parser.add_argument("--url", required=True)
     download_parser.add_argument("--output", required=True)
     download_parser.add_argument("--format")
+    download_parser.add_argument("--cache-dir")
 
     args = parser.parse_args()
 
     if args.command == "metadata":
-        fetch_metadata(args.url)
+        fetch_metadata(args.url, args.cache_dir)
     elif args.command == "download":
-        download_video(args.url, args.output, args.format)
+        download_video(args.url, args.output, args.format, args.cache_dir)
     else:
         raise SystemExit(f"Unsupported command: {args.command}")
 
