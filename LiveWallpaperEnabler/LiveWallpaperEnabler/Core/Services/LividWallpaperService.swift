@@ -16,7 +16,12 @@ final class LividWallpaperService {
     private(set) var isApplying = false
     private(set) var lastError: String?
 
-    var activeItemID: UUID? { activeSelection?.sourceItemID }
+    /// Library item the active video came from; nil once that item was removed from the library
+    /// (the patched copy keeps playing, but nothing in the library is "active" anymore).
+    var activeItemID: UUID? {
+        guard let id = activeSelection?.sourceItemID, WallpaperStore.shared.contains(id: id) else { return nil }
+        return id
+    }
 
     func setActive(_ item: LiveWallpaperItem) {
         guard !isApplying else { return }

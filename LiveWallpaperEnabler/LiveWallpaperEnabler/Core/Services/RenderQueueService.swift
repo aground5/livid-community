@@ -114,16 +114,16 @@ class RenderQueueService {
                 
                 // 4. Success
                 if let finishIndex = jobs.firstIndex(where: { $0.id == job.id }) {
-                    jobs[finishIndex].status = .completed
-                    jobs[finishIndex].progress = 1.0
-                    
-                    // Register to Wallpaper Store
+                    // Register to Wallpaper Store first: the job only counts as completed once
+                    // the video is in the library (a failure falls through to the catch below).
                     let config = jobs[finishIndex].config
-                    WallpaperStore.shared.add(
+                    try WallpaperStore.shared.add(
                         fileURL: config.outputURL,
                         originalName: jobs[finishIndex].originalFilename,
                         duration: config.endTime - config.startTime
                     )
+                    jobs[finishIndex].status = .completed
+                    jobs[finishIndex].progress = 1.0
                 }
                 
             } catch {

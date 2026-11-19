@@ -9,7 +9,7 @@ class LiveWallpaperHelperService: NSObject, LiveWallpaperHelperProtocol {
                 let pythonURL = try await pythonRuntimeURL()
                 let task = PythonTask(
                     scriptName: "yt_dlp_bridge",
-                    arguments: ["metadata", "--url", url.absoluteString],
+                    arguments: ["metadata", "--url", url.absoluteString, "--cache-dir", AppPaths.ytDLPCache.path],
                     binaryURL: pythonURL
                 )
                 
@@ -68,6 +68,7 @@ class LiveWallpaperHelperService: NSObject, LiveWallpaperHelperProtocol {
                     "download",
                     "--url", url.absoluteString,
                     "--output", outputPath,
+                    "--cache-dir", AppPaths.ytDLPCache.path,
                 ]
                 
                 if let formatID, !formatID.isEmpty {

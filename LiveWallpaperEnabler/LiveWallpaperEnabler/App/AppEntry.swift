@@ -8,6 +8,9 @@ struct LiveWallpaperEnablerApp: App {
     private let updaterController: SPUStandardUpdaterController
 
     init() {
+        // Leftovers of downloads/conversions interrupted by a quit or crash.
+        AppPaths.clearStaging()
+
         // If startingUpdater is true, the updater will be started automatically, which checks for updates in background
         updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
     }

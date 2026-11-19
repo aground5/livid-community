@@ -9,7 +9,7 @@ import Foundation
 ///
 /// This file is compiled into both targets, so it must stay free of app-only types and actor isolation.
 nonisolated enum ActiveWallpaper {
-    static let appGroupID = "group.com.mitocondria.LiveWallpaperEnabler"
+    static let appGroupID = AppPaths.appGroupID
 
     /// Posted (Darwin notify) by the app after `active.json` changes.
     static let didChangeNotification = "com.mitocondria.LiveWallpaperEnabler.activeWallpaperDidChange"
@@ -24,9 +24,7 @@ nonisolated enum ActiveWallpaper {
     }
 
     static var directory: URL? {
-        FileManager.default
-            .containerURL(forSecurityApplicationGroupIdentifier: appGroupID)?
-            .appendingPathComponent("Library/Application Support/LiveWallpaperEnabler/ActiveWallpaper", isDirectory: true)
+        AppPaths.activeWallpaper
     }
 
     private static var selectionURL: URL? {

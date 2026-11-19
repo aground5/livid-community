@@ -66,6 +66,11 @@ struct LibraryView: View {
         } message: {
             Text("Enter a new name for this wallpaper.")
         }
+        .safeAreaInset(edge: .top) {
+            if let issue = store.loadIssue ?? IngredientStore.shared.loadIssue {
+                StorageIssueBanner(message: issue)
+            }
+        }
         .safeAreaInset(edge: .bottom) {
             ActiveWallpaperBar(service: wallpaperService)
         }
@@ -78,6 +83,30 @@ struct LibraryView: View {
                 )
             }
         }
+    }
+}
+
+/// Shown when a database file could not be read cleanly. The original is always backed up
+/// next to it in the Database folder before anything is written.
+private struct StorageIssueBanner: View {
+    let message: String
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.yellow)
+            Text(message)
+                .font(.caption)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Button("Show Backups") {
+                NSWorkspace.shared.activateFileViewerSelecting([AppPaths.database])
+            }
+            .controlSize(.small)
+        }
+        .padding(10)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
+        .padding(.horizontal)
+        .padding(.top, 4)
     }
 }
 
@@ -98,9 +127,15 @@ private struct LibraryRow: View {
                 Text(item.displayName)
                     .font(.headline)
                     .lineLimit(1)
-                Text(item.creationDate.formatted(date: .abbreviated, time: .shortened))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                if item.isMissing {
+                    Label("Video file missing", systemImage: "exclamationmark.triangle.fill")
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                } else {
+                    Text(item.creationDate.formatted(date: .abbreviated, time: .shortened))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
             
             Spacer()
@@ -127,7 +162,7 @@ private struct LibraryRow: View {
             } label: {
                 Label("Set as Wallpaper", systemImage: "photo.on.rectangle")
             }
-            .disabled(isActive)
+            .disabled(isActive || item.isMissing)
             
             Button {
                 onRename()
@@ -179,9 +214,15 @@ private struct LibraryGridItem: View {
                 Text(item.displayName)
                     .font(.headline)
                     .lineLimit(1)
-                Text(item.creationDate.formatted(date: .abbreviated, time: .omitted))
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                if item.isMissing {
+                    Label("Video file missing", systemImage: "exclamationmark.triangle.fill")
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                } else {
+                    Text(item.creationDate.formatted(date: .abbreviated, time: .omitted))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
         }
         .contentShape(Rectangle())
@@ -191,7 +232,7 @@ private struct LibraryGridItem: View {
             } label: {
                 Label("Set as Wallpaper", systemImage: "photo.on.rectangle")
             }
-            .disabled(isActive)
+            .disabled(isActive || item.isMissing)
             
             Button {
                 onRename()

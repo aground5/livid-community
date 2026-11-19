@@ -33,7 +33,6 @@ struct PrepareView: View {
             )
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
-                    #if DIRECT_DISTRIBUTION
                     // Download Options for YouTube
                     if let active = viewModel.activeIngredient, 
                        case .youtube(let metadata, _, let streams) = active.source {
@@ -59,17 +58,14 @@ struct PrepareView: View {
                             .frame(width: 320)
                         }
                     }
-                    #endif
                     
                     Menu {
                         Button(action: { viewModel.selectFile() }) {
                             Label("Local File", systemImage: "folder")
                         }
-                        #if DIRECT_DISTRIBUTION
                         Button(action: { viewModel.showYouTubeInput = true }) {
                             Label("YouTube Link", systemImage: "video.badge.plus")
                         }
-                        #endif
                     } label: {
                         Label("Add", systemImage: "plus")
                     }
@@ -101,11 +97,9 @@ struct PrepareView: View {
                 }
             }
         }
-        #if DIRECT_DISTRIBUTION
         .sheet(isPresented: $viewModel.showYouTubeInput) {
             YouTubeURLInputSheet(viewModel: viewModel)
         }
-        #endif
         .alert("Import Error", isPresented: Binding(
             get: { viewModel.importState.error != nil },
             set: { if !$0 { /* Error clearing handled by service state */ } }
@@ -430,7 +424,6 @@ private struct LoadingOverlay: View {
     }
 }
 
-#if DIRECT_DISTRIBUTION
 // MARK: - Simplified YouTube Info & Download
 private struct YouTubeInfoSection: View {
     let metadata: YTDLPMetadata
@@ -738,4 +731,3 @@ struct YouTubeURLInputSheet: View {
         .frame(width: 400)
     }
 }
-#endif

@@ -20,11 +20,6 @@ class YouTubeDownloadService {
         let id = ingredient.id
         _ = ingredient.source.youtubeMetadata
         
-        let downloadFolder = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("LiveWallpaperDownloads", isDirectory: true)
-        
-        try? FileManager.default.createDirectory(at: downloadFolder, withIntermediateDirectories: true)
-        
         downloadTasks[id]?.cancel()
         downloadStates[id] = DownloadState(
             progress: 0.0,
@@ -36,8 +31,7 @@ class YouTubeDownloadService {
         let task = Task {
             await performDownload(
                 ingredient: ingredient,
-                resolution: resolution,
-                downloadFolder: downloadFolder
+                resolution: resolution
             )
         }
         downloadTasks[id] = task
@@ -50,8 +44,7 @@ class YouTubeDownloadService {
     
     private func performDownload(
         ingredient: MediaIngredient,
-        resolution: Int,
-        downloadFolder: URL
+        resolution: Int
     ) async {
         let id = ingredient.id
         let metadata = ingredient.source.youtubeMetadata!
@@ -72,8 +65,10 @@ class YouTubeDownloadService {
         videoID = videoID.components(separatedBy: allowed.inverted).joined(separator: "_")
         
         let helperTaskID = UUID().uuidString
-        let taskFolder = downloadFolder.appendingPathComponent("pending_\(videoID)_\(resolution)")
-        try? FileManager.default.createDirectory(at: taskFolder, withIntermediateDirectories: true)
+        // In-flight files live in the container's Staging folder; only the finished preview is
+        // moved into the ingredient's own source folder.
+        let taskFolder = AppPaths.stagingFolder(named: "youtube_\(videoID)_\(resolution)_\(helperTaskID)")
+        defer { try? FileManager.default.removeItem(at: taskFolder) }
         
         await MainActor.run {
             self.helperTaskIDs[id] = helperTaskID
@@ -143,16 +138,14 @@ class YouTubeDownloadService {
             
             // Cleanup: Delete the original high-res download once the preview is ready
             // and move the preview out of the task folder
-            let finalDestination = downloadFolder.appendingPathComponent(previewFilename)
+            let finalDestination = AppPaths.sourceFolder(for: id, youtube: true).appendingPathComponent("preview.mp4")
             if FileManager.default.fileExists(atPath: finalDestination.path) {
                 try? FileManager.default.removeItem(at: finalDestination)
             }
             try FileManager.default.moveItem(at: previewURL, to: finalDestination)
             let finalPreviewURL = finalDestination
             
-            // Remove the source file and the temporary task folder
-            try? FileManager.default.removeItem(at: downloadedFile)
-            try? FileManager.default.removeItem(at: taskFolder)
+            // The original high-res download and the staging folder are removed by the defer above.
             
             try Task.checkCancellation()
             

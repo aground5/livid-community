@@ -62,10 +62,8 @@ class MainViewModel {
     // MARK: - Import State Proxy
     var importState: ImportState { AssetImportService.shared.state }
     
-    #if DIRECT_DISTRIBUTION
     var showYouTubeInput = false
     var youtubeURL: String = ""
-    #endif
     
     // MARK: - Download State Proxy
     var downloadStates: [UUID: DownloadState] { YouTubeDownloadService.shared.downloadStates }
@@ -177,9 +175,7 @@ class MainViewModel {
     // addLocalIngredient has been moved to AssetImportService.shared.importFile(at:)
     
     func removeIngredient(_ ingredient: MediaIngredient) {
-        if let localURL = ingredient.source.localURL, localURL.path.contains("LiveWallpaperDownloads") == true {
-             try? FileManager.default.removeItem(at: localURL)
-        }
+        // The store deletes the ingredient's own folder in the container; user files are never touched.
         IngredientStore.shared.remove(id: ingredient.id)
         if selectedIngredientID == ingredient.id {
             selectedIngredientID = nil

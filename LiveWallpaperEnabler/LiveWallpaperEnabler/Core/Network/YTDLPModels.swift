@@ -65,14 +65,15 @@ public struct YTDLPMetadata: Codable, Sendable {
     public let description: String?
 
     // Convenience initializer for locally synthesized metadata payloads.
-    public init(id: String, title: String, description: String?, webpage_url: String, thumbnail: String?) {
+    public init(id: String, title: String, description: String?, webpage_url: String, thumbnail: String?,
+                uploader: String? = nil, duration: Double? = nil) {
         self.id = id
         self.title = title
         self.description = description
         self.webpage_url = webpage_url
         self.thumbnail = thumbnail
-        self.uploader = nil
-        self.duration = nil
+        self.uploader = uploader
+        self.duration = duration
         self.formats = nil
     }
 }

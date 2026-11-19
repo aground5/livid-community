@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-// #if DIRECT_DISTRIBUTION
 extension MainViewModel {
     
     // MARK: - YouTube Integration
