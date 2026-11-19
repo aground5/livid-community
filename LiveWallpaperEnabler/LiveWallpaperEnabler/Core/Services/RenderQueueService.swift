@@ -88,8 +88,8 @@ class RenderQueueService {
             // 3. Execute
             do {
                 try await exporter.export(config: job.config) { [weak self] progress in
+                    guard let self else { return }
                     Task { @MainActor in
-                        guard let self = self else { return }
                         // Update Job State Live
                         if let currentIndex = self.jobs.firstIndex(where: { $0.id == job.id }) {
                             var updatingJob = self.jobs[currentIndex]

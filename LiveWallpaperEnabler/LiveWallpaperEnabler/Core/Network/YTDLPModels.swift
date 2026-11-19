@@ -1,6 +1,6 @@
 import Foundation
 
-public struct YTDLPFormat: Codable, Identifiable, Sendable {
+nonisolated public struct YTDLPFormat: Codable, Identifiable, Sendable {
     public let format_id: String
     public let ext: String
     public let width: Int?
@@ -54,7 +54,7 @@ public struct YTDLPFormat: Codable, Identifiable, Sendable {
     }
 }
 
-public struct YTDLPMetadata: Codable, Sendable {
+nonisolated public struct YTDLPMetadata: Codable, Sendable {
     public let id: String
     public let title: String
     public let uploader: String?

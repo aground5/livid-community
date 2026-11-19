@@ -8,7 +8,7 @@ enum YouTubeDownloadError: Error {
     case downloadFailed(String)
 }
 
-struct YouTubeStreamOption: Identifiable, Hashable, Codable {
+nonisolated struct YouTubeStreamOption: Identifiable, Hashable, Codable, Sendable {
     let id: String
     let formatID: String?
     let resolution: Int

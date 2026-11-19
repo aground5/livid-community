@@ -4,7 +4,7 @@ import SwiftUI
 import CoreMedia
 
 /// Represents the status of a specific render job
-enum RenderStatus: Equatable, Sendable {
+nonisolated enum RenderStatus: Equatable, Sendable {
     case pending
     case rendering
     case completed
@@ -14,7 +14,7 @@ enum RenderStatus: Equatable, Sendable {
 
 /// A unifying model representing a single item in the export queue.
 /// This model drives the UI for the Render Queue List.
-struct RenderJob: Identifiable, Equatable, Sendable {
+nonisolated struct RenderJob: Identifiable, Equatable, Sendable {
     let id: UUID
     let config: LiveWallpaperExportConfiguration
     let createdAt: Date
@@ -37,7 +37,7 @@ struct RenderJob: Identifiable, Equatable, Sendable {
 }
 
 /// Moved from LiveWallpaperExporter.swift to be shared
-struct LiveWallpaperExportConfiguration: Sendable {
+nonisolated struct LiveWallpaperExportConfiguration: Sendable {
     let sourceURL: URL
     let outputURL: URL
     let startTime: Double

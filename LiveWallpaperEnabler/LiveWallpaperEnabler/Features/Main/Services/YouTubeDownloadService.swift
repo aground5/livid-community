@@ -138,11 +138,17 @@ class YouTubeDownloadService {
             
             // Cleanup: Delete the original high-res download once the preview is ready
             // and move the preview out of the task folder
-            let finalDestination = AppPaths.sourceFolder(for: id, youtube: true).appendingPathComponent("preview.mp4")
-            if FileManager.default.fileExists(atPath: finalDestination.path) {
-                try? FileManager.default.removeItem(at: finalDestination)
-            }
+            // A unique name per download: the editor reloads the player only when the URL changes,
+            // so re-downloading (e.g. another resolution) to the same path would leave it stale.
+            let sourceFolder = AppPaths.sourceFolder(for: id, youtube: true)
+            let finalDestination = sourceFolder.appendingPathComponent("preview_\(resolution)p_\(helperTaskID.prefix(8)).mp4")
             try FileManager.default.moveItem(at: previewURL, to: finalDestination)
+            // Remove previews from earlier downloads of this ingredient.
+            if let existing = try? FileManager.default.contentsOfDirectory(at: sourceFolder, includingPropertiesForKeys: nil) {
+                for file in existing where file.lastPathComponent.hasPrefix("preview") && file.lastPathComponent != finalDestination.lastPathComponent {
+                    try? FileManager.default.removeItem(at: file)
+                }
+            }
             let finalPreviewURL = finalDestination
             
             // The original high-res download and the staging folder are removed by the defer above.

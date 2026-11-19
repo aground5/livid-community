@@ -820,7 +820,7 @@ bool FFmpegWrapper::transcodeInternal(const char *outputPath,
 
   // --- FINAL FLUSHING ---
   if (filter_graph) {
-    av_buffersrc_add_frame_flags(filt_src, nullptr, 0);
+    (void)av_buffersrc_add_frame_flags(filt_src, nullptr, 0); // flush; EOF signal result not needed
     while (av_buffersink_get_frame(filt_sink, filt_frame) >= 0) {
       filt_frame->pts = pts_counter++;
       filt_frame->pict_type = AV_PICTURE_TYPE_NONE; // ← 추가!

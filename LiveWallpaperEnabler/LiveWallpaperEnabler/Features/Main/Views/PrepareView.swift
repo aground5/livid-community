@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import Foundation
 
 struct PrepareView: View {
@@ -208,11 +209,7 @@ private struct IngredientRowView: View {
         .grayscale(ingredient.isOffline ? 1.0 : 0.0)
         .contentShape(Rectangle())
         .contextMenu {
-            Button(role: .destructive) {
-                viewModel.removeIngredient(ingredient)
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
+            IngredientContextMenu(ingredient: ingredient, viewModel: viewModel)
         }
     }
     
@@ -312,11 +309,7 @@ private struct IngredientGridItem: View {
         .grayscale(ingredient.isOffline ? 1.0 : 0.0)
         .contentShape(Rectangle())
         .contextMenu {
-            Button(role: .destructive) {
-                viewModel.removeIngredient(ingredient)
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
+            IngredientContextMenu(ingredient: ingredient, viewModel: viewModel)
         }
     }
     
@@ -331,6 +324,37 @@ private struct IngredientGridItem: View {
         switch ingredient.source {
         case .local: return "Local"
         case .youtube: return "YouTube"
+        }
+    }
+}
+
+/// Shared context menu for raw assets (list and grid).
+private struct IngredientContextMenu: View {
+    let ingredient: MediaIngredient
+    let viewModel: MainViewModel
+
+    /// The on-disk file, if the asset has been downloaded/imported and still exists.
+    private var fileOnDisk: URL? {
+        guard let url = ingredient.source.localURL,
+              FileManager.default.fileExists(atPath: url.path) else { return nil }
+        return url
+    }
+
+    var body: some View {
+        if let url = fileOnDisk {
+            Button {
+                NSWorkspace.shared.activateFileViewerSelecting([url])
+            } label: {
+                Label("Show in Finder", systemImage: "folder")
+            }
+
+            Divider()
+        }
+
+        Button(role: .destructive) {
+            viewModel.removeIngredient(ingredient)
+        } label: {
+            Label("Delete", systemImage: "trash")
         }
     }
 }
