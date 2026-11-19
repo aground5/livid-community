@@ -40,10 +40,6 @@ class LiveWallpaperHelper {
             listener.delegate = delegate
             listener.resume()
             
-            HelperLogger.log("Starting Local Asset Server...")
-            NSLog("🚀 Starting Local Asset Server...")
-            LocalAssetServer.shared.start()
-            
             HelperLogger.log("Entering Main RunLoop...")
             NSLog("🚀 Entering Main RunLoop...")
             RunLoop.main.run()

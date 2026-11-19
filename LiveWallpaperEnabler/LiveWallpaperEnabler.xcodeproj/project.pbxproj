@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A1BD1372F3A34EF005AA44A /* WebMSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1BD1362F3A34EF005AA44A /* WebMSupport */; };
 		0A67C36A2F5200280087C7FB /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0A67C3692F5200280087C7FB /* Sparkle */; };
-		0A8CFC5F2F34BAB7006D784F /* Hummingbird in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8CFC5E2F34BAB7006D784F /* Hummingbird */; };
-		0A8CFC622F34BAF8006D784F /* HummingbirdCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8CFC612F34BAF8006D784F /* HummingbirdCore */; };
-		0A8CFC642F34BAF8006D784F /* HummingbirdHTTP2 in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8CFC632F34BAF8006D784F /* HummingbirdHTTP2 */; };
-		0A8CFC662F34BAF8006D784F /* HummingbirdRouter in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8CFC652F34BAF8006D784F /* HummingbirdRouter */; };
-		0A8CFC682F34BAF8006D784F /* HummingbirdTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8CFC672F34BAF8006D784F /* HummingbirdTesting */; };
-		0A8CFC6A2F34BAF8006D784F /* HummingbirdTLS in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8CFC692F34BAF8006D784F /* HummingbirdTLS */; };
 		0AAFFB512F292C5E007DD74E /* WebMSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0AAFFB502F292C5E007DD74E /* WebMSupport */; };
 		0AAFFB762F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 0AAFFB6B2F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -132,12 +126,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A8CFC642F34BAF8006D784F /* HummingbirdHTTP2 in Frameworks */,
-				0A8CFC662F34BAF8006D784F /* HummingbirdRouter in Frameworks */,
-				0A8CFC6A2F34BAF8006D784F /* HummingbirdTLS in Frameworks */,
-				0A8CFC682F34BAF8006D784F /* HummingbirdTesting in Frameworks */,
-				0A8CFC622F34BAF8006D784F /* HummingbirdCore in Frameworks */,
-				0A8CFC5F2F34BAB7006D784F /* Hummingbird in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,12 +206,6 @@
 			);
 			name = LiveWallpaperHelper;
 			packageProductDependencies = (
-				0A8CFC5E2F34BAB7006D784F /* Hummingbird */,
-				0A8CFC612F34BAF8006D784F /* HummingbirdCore */,
-				0A8CFC632F34BAF8006D784F /* HummingbirdHTTP2 */,
-				0A8CFC652F34BAF8006D784F /* HummingbirdRouter */,
-				0A8CFC672F34BAF8006D784F /* HummingbirdTesting */,
-				0A8CFC692F34BAF8006D784F /* HummingbirdTLS */,
 			);
 			productName = LiveWallpaperHelper;
 			productReference = 0AAFFB6B2F2B57A8007DD74E /* com.mitocondria.LiveWallpaperHelper.xpc */;
@@ -257,7 +239,6 @@
 			mainGroup = 0A291C522F29066600A8B5B9;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */,
 				0A1BD1352F3A34EE005AA44A /* XCLocalSwiftPackageReference "../Packages/WebMSupport" */,
 				0A67C3682F5200280087C7FB /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
@@ -657,14 +638,6 @@
 				minimumVersion = 2.9.0;
 			};
 		};
-		0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hummingbird-project/hummingbird.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.20.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -676,36 +649,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0A67C3682F5200280087C7FB /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
-		};
-		0A8CFC5E2F34BAB7006D784F /* Hummingbird */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */;
-			productName = Hummingbird;
-		};
-		0A8CFC612F34BAF8006D784F /* HummingbirdCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */;
-			productName = HummingbirdCore;
-		};
-		0A8CFC632F34BAF8006D784F /* HummingbirdHTTP2 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */;
-			productName = HummingbirdHTTP2;
-		};
-		0A8CFC652F34BAF8006D784F /* HummingbirdRouter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */;
-			productName = HummingbirdRouter;
-		};
-		0A8CFC672F34BAF8006D784F /* HummingbirdTesting */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */;
-			productName = HummingbirdTesting;
-		};
-		0A8CFC692F34BAF8006D784F /* HummingbirdTLS */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A8CFC5D2F34BAB7006D784F /* XCRemoteSwiftPackageReference "hummingbird" */;
-			productName = HummingbirdTLS;
 		};
 		0AAFFB502F292C5E007DD74E /* WebMSupport */ = {
 			isa = XCSwiftPackageProductDependency;

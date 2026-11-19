@@ -868,7 +868,8 @@ class AerialService {
         }
         
         // 2. Create AerialAsset model
-        // Use LocalAssetServer URLs for on-the-fly patching
+        // The patched video and thumbnail are already stored in the system Aerials folders above.
+        // These localhost URLs are kept only as identifiers (see isCustomAsset); nothing serves them.
         let videoFileURL = "http://localhost:50505/video/\(assetID).mov"
         let thumbFileURL = "http://localhost:50505/thumbnail/\(assetID).png"
         
